@@ -81,29 +81,66 @@ console.log toCamel "space_cased_variable"
 
 <section class="slide" id="overview">
   <h2>Overview TODO</h2>
-</section>
-
-<section class="slide" id="like-existential">
-  <h2>XXX. Syntax TODO</h2>
   <div>
     <ul>
-      <li>Ruby</li>
-      <li>Python</li>
+      <li>TODO</li>
     </ul>
+  </div>
+</section>
+
+<section class="slide" id="like-syntax">
+  <h2>1. Syntax</h2>
+  <p>
+    Borrows familiar constructs from
+    <strong>Ruby</strong> (return variables, optional parenthesis, string
+    interpolation) and
+    <strong>Python</strong> (whitespace, comprehensions).
+  </p>
+  <div>
+    <textarea id="code" name="code" class="code"
+              mode="coffeescript" runnable="true"
+              style="display: none;"
+>
+myArray = [
+  "optional"
+  "commas"
+]
+
+myObject =
+  foo:    "the foo property"
+  bar:
+    baz1: "nested"
+    baz2: "properties"
+
+console.log "myArray: #{myArray.join(', ')}"
+</textarea>
   </div>
 </section>
 
 <section class="slide" id="like-functions">
-  <h2>XXX. Functions TODO</h2>
+  <h2>2. Functions</h2>
+  <p>
+    Useful enhancements include
+    <strong>splats</strong> (<code>...args</code>) and
+    <strong>defaults</strong> (<code>foo = "hi"</code>)
+  </p>
   <div>
-    <ul>
-      <li>Splats</li>
-      <li>Defaults</li>
-    </ul>
+    <textarea id="code" name="code" class="code"
+              mode="coffeescript" runnable="true"
+              style="display: none;"
+>
+myFunction = (foo, bar = "HI", ...args) ->
+  console.log "foo: #{foo}"
+  console.log "bar: #{bar}"
+  console.log "args: #{args}"
+
+myFunction "FOO VAL"
+myFunction "FOO VAL", null, "another arg", 42
+</textarea>
   </div>
 </section>
 
-<section class="slide" id="like-existential">
+<section class="slide" id="like-classes">
   <h2>XXX. Classes TODO</h2>
   <div>
     <ul>
@@ -131,7 +168,6 @@ console.log toCamel "space_cased_variable"
     </ul>
   </div>
 </section>
-
 
 <section class="slide" id="conclusion">
   <br />
