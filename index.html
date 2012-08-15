@@ -48,8 +48,10 @@
 <section class="slide" id="hello-js">
   <h2>The World of JavaScript</h2>
   <p>This should look familiar...</p>
-  <form>
-  	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;"
+  <div>
+  	<textarea id="code" name="code" class="code"
+  						mode="javascript"
+  						style="display: none;"
 >var http = require('http');
 
 var app = http.createServer(function (req, res) {
@@ -60,14 +62,16 @@ var app = http.createServer(function (req, res) {
 })
 
 app.listen(2001);</textarea>
-	</form>
+	</div>
 </section>
 
 <section class="slide" id="hello-coffee">
   <h2>The World of CoffeeScript</h2>
   <p>... and this shouldn't look too different</p>
-  <form>
-  	<textarea id="code" name="code" class="code" mode="coffeescript" style="display: none;"
+  <div>
+  	<textarea id="code" name="code" class="code"
+  						mode="coffeescript" runnable="true"
+  						style="display: none;"
 >http = require 'http'
 
 app = http.createServer (req, res) -&gt;
@@ -76,7 +80,7 @@ app = http.createServer (req, res) -&gt;
   res.end "<h1>Hello World!</h1>"
 
 app.listen 2001</textarea>
-	</form>
+	</div>
 </section>
 
 <!-- End slides. -->
@@ -136,7 +140,7 @@ app.listen 2001</textarea>
         theme: "elegant",
         indentUnit: 2,
         indentWithTabs: false,
-        runnable: true
+        runnable: false
       }
     });
   });
