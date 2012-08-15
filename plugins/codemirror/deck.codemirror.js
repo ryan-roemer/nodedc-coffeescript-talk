@@ -7,14 +7,14 @@
 (function($, deck, undefined) {
 
   var $d = $(document);
-  
+
   /*
   Extends defaults/options.
-  
+
   options.classes.codemirror
-    This class is added to the deck container when there is code in the 
-    slide that should be 
-    
+    This class is added to the deck container when there is code in the
+    slide that should be
+
   options.selectors.codemirror-item
     This class should be added to the element containing code that should
     be highlighted.
@@ -24,7 +24,7 @@
       codemirror: 'deck-codemirror',
       codemirrorresult: 'deck-codemirror-result'
     },
-    
+
     selectors: {
       codemirroritem: '.code',
     },
@@ -42,7 +42,7 @@
       runnable : false
     }
   });
-  
+
   // flag to indicate that we are currently in the editor. Required to stop keypress
   // propagation to all other extensions.
   var inEditor = false;
@@ -63,7 +63,7 @@
         src: this.innerHTML
       });
     });
-    
+
     // Seek out and cache all cleanup scripts
     $("script[type=\"codemirror/cleanup\"]").each(function() {
       cleanupScripts.push({
@@ -98,10 +98,10 @@
         if (codeblock.get(0).nodeName.toUpperCase() === "TEXTAREA") {
           editor = CodeMirror.fromTextArea(codeblock[0], options);
         } else {
-          // else codemirror the element's content and attach to element parent. 
+          // else codemirror the element's content and attach to element parent.
           var parent  = codeblock.parent();
           codeblock.hide();
-          editor      = CodeMirror(parent[0], 
+          editor      = CodeMirror(parent[0],
             $.extend(options, {
               value : codeblock.html()
             })
@@ -143,7 +143,7 @@
 
               // save the default logging behavior.
               var real_console_log = console.log;
-              
+
               // save the default logging behavior.
               // Following Dean Edward's fantastic sandbox code:
               // http://dean.edwards.name/weblog/2006/11/sandbox/+evaluating+js+in+an+iframe
@@ -173,12 +173,15 @@
               var sandBoxMarkup = "<script>"+
                 "var MSIE/*@cc_on =1@*/;"+ // sniff
                 "console={ log: parent.console.log };" +
-                "parent.sandbox=MSIE?this:{eval:function(s){return eval(s)}}<\/script>";
+                //"parent.sandbox=MSIE?this:{eval:function(s){return eval(s)}}<\/script>";
+                "parent.sandbox={eval:function(s){try{s = CoffeeScript.compile(s);}catch(err){} return eval(s);}}<\/script>";
 
-              var exposeGlobals;
-              if (exposeGlobals = $(codeblock).attr("globals")) {
-                exposeGlobals = exposeGlobals.split(",");
-
+              var exposeGlobals = opts.codemirror.globals || [];
+              var globalAttr = $(codeblock).attr("globals");
+              if (globalAttr) {
+                exposeGlobals = exposeGlobals.concat(globalAttr.split(","));
+              }
+              if (exposeGlobals.length > 0) {
                 $.each(exposeGlobals, function(prop, val) {
                   val = $.trim(val);
                   iframe[0].contentWindow[val] = window[val];
@@ -196,9 +199,9 @@
                   combinedSource += this.src + "\n";
                 }
               });
-              
+
               combinedSource += editor.getValue();
-              
+
               // Append all cleanup scripts
               $.each(cleanupScripts, function() {
                 if ($(codeblock).is(this.selector)) {
@@ -211,7 +214,7 @@
 
               // get rid of the frame. New Frame for every context.
               iframe.remove();
-              
+
               // set the old logging behavior back.
               console.log = real_console_log;
             }
@@ -222,7 +225,7 @@
   };
 
   $d.bind('deck.init', function() {
-    
+
     // codemirrorify current and next slide, since we're in the beginning.
     codemirrorify($.deck('getSlide', 0));
     codemirrorify($.deck('getSlide', 1));
@@ -233,8 +236,8 @@
     // codemirrorify previous slide
     if (to > 0) {
       codemirrorify($.deck('getSlide', to - 1));
-    } 
-    
+    }
+
     // codemirrorify current slide
     codemirrorify($.deck('getSlide', to));
 

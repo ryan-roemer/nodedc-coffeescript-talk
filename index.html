@@ -50,18 +50,16 @@
   <p>This should look familiar...</p>
   <div>
   	<textarea id="code" name="code" class="code"
-  						mode="javascript"
+  						mode="javascript" runnable="true"
   						style="display: none;"
->var http = require('http');
-
-var app = http.createServer(function (req, res) {
-  res.writeHead(200, {
-    'content-type': "text/html"
+>var toCamel = function (str) {
+  return str.replace(/(\_[a-z])/g, function (val) {
+    return val.toUpperCase().replace('_', '');
   });
-  res.end("<h1>Hello World!</h1>")
-})
+};
 
-app.listen(2001);</textarea>
+console.log(toCamel("space_cased_variable"));
+</textarea>
 	</div>
 </section>
 
@@ -72,14 +70,12 @@ app.listen(2001);</textarea>
   	<textarea id="code" name="code" class="code"
   						mode="coffeescript" runnable="true"
   						style="display: none;"
->http = require 'http'
+>toCamel = (str) ->
+  str.replace /(\_[a-z])/g, (val) ->
+    val.toUpperCase().replace '_', ''
 
-app = http.createServer (req, res) -&gt;
-  res.writeHead 200,
-    'content-type': "text/html"
-  res.end "<h1>Hello World!</h1>"
-
-app.listen 2001</textarea>
+console.log toCamel "space_cased_variable"
+</textarea>
 	</div>
 </section>
 
@@ -114,6 +110,7 @@ app.listen 2001</textarea>
 
 <!-- Required JS files. -->
 <script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/coffee-script-1.3.3.min.js"></script>
 <script src="core/deck.core.js"></script>
 
 <!-- Extension JS files. Add or remove as needed. -->
@@ -140,7 +137,8 @@ app.listen 2001</textarea>
         theme: "elegant",
         indentUnit: 2,
         indentWithTabs: false,
-        runnable: false
+        runnable: false,
+        globals: ["CoffeeScript"]
       }
     });
   });
