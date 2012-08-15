@@ -58,8 +58,7 @@
   });
 };
 
-console.log(toCamel("space_cased_variable"));
-</textarea>
+console.log(toCamel("space_cased_variable"));</textarea>
   </div>
 </section>
 
@@ -74,8 +73,7 @@ console.log(toCamel("space_cased_variable"));
   str.replace /(\_[a-z])/g, (val) ->
     val.toUpperCase().replace '_', ''
 
-console.log toCamel "space_cased_variable"
-</textarea>
+console.log toCamel "space_cased_variable"</textarea>
   </div>
 </section>
 
@@ -112,8 +110,7 @@ myObject =
     baz1: "nested"
     baz2: "properties"
 
-console.log "myArray: #{myArray.join(', ')}"
-</textarea>
+console.log "myArray: #{myArray.join(', ')}"</textarea>
   </div>
 </section>
 
@@ -121,38 +118,79 @@ console.log "myArray: #{myArray.join(', ')}"
   <h2>2. Functions</h2>
   <p>
     Useful enhancements include
-    <strong>splats</strong> (<code>...args</code>) and
-    <strong>defaults</strong> (<code>foo = "hi"</code>)
+    <strong>defaults</strong> (<code>bar = "hi"</code>) and
+    <strong>splats</strong> (<code>...args</code>).
   </p>
   <div>
     <textarea id="code" name="code" class="code"
               mode="coffeescript" runnable="true"
               style="display: none;"
 >
-myFunction = (foo, bar = "HI", ...args) ->
-  console.log "foo: #{foo}"
-  console.log "bar: #{bar}"
-  console.log "args: #{args}"
+myFunction = (foo, bar = "hi", args...) ->
+  console.log "foo: #{foo}, bar: #{bar}"
+  console.log "args: #{args.join(', ')}"
+  console.log()
 
-myFunction "FOO VAL"
-myFunction "FOO VAL", null, "another arg", 42
-</textarea>
+# Call with defaults, varargs.
+myFunction(23, null, "another arg", 42)
+
+# Expand array args.
+myFunction([12, 22, 34]...)</textarea>
   </div>
 </section>
 
 <section class="slide" id="like-classes">
-  <h2>XXX. Classes TODO</h2>
+  <h2>3. Classes</h2>
+  <p>
+    Follows the "classical inheritance" pattern with helpers:
+    <strong>shortcuts</strong> (<code>@</code>),
+    <strong>fat arrows</strong> (<code>=&gt;</code>), and
+    <strong>superclass</strong> (<code>super</code>).
+  </p>
   <div>
-    <ul>
-      <li>Classical Pattern</li>
-      <li>@</li>
-      <li>Fat Arrows</li>
-    </ul>
+    <textarea id="code" name="code" class="code"
+              mode="coffeescript" runnable="true"
+              style="display: none;"
+>
+class MyClass
+  constructor: (@foo, @bar) ->
+
+  @staticMethod: -> console.log "static!"
+
+  instanceMethod: => console.log "instance! (#{@foo})"
+
+myObj = new MyClass(42, 23)
+
+MyClass.staticMethod()              # Static
+myObj.instanceMethod()              # Instance
+myObj.instanceMethod.call this, []  # Bound</textarea>
   </div>
 </section>
 
 <section class="slide" id="like-existential">
-  <h2>XXX. Existential Operator TODO</h2>
+  <h2>4. Existential Operator</h2>
+  <p>An elegant way to avoid <code>TypeError</code>'s and replace:</p>
+  <div>
+    <textarea id="code" name="code" class="code"
+              mode="javascript"
+              style="display: none;"
+>
+var myObj = {foo: {bar: {baz: 12}}};
+if (myObj.foo && myObj.foo.bar && myObj.foo.bar.baz)
+  console.log(myObj.foo.bar.baz);</textarea>
+  </div>
+  <br />
+  <p>... with:</p>
+  <div>
+    <textarea id="code" name="code" class="code"
+              mode="coffeescript" runnable="true"
+              style="display: none;"
+>
+myObj = foo: bar: baz: 12
+
+console.log myObj?.foo?.bar?.baz
+console.log myObj?.nope?.noHow?().nowhere</textarea>
+  </div>
 </section>
 
 <section class="slide" id="like-iterators">
