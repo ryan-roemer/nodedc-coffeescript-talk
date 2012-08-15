@@ -24,22 +24,59 @@
 	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
 	<link rel="stylesheet" href="themes/transition/horizontal-slide.css">
 
+  <link rel="stylesheet" href="plugins/codemirror/deck.codemirror.css">
+  <link rel="stylesheet" href="plugins/codemirror/themes/elegant.css">
+<!--
+  <link rel="stylesheet" href="plugins/codemirror/themes/cobalt.css">
+  <link rel="stylesheet" href="plugins/codemirror/themes/default.css">
+  <link rel="stylesheet" href="plugins/codemirror/themes/neat.css">
+  <link rel="stylesheet" href="plugins/codemirror/themes/night.css">
+-->
+
+  <link rel="stylesheet" href="custom/slides.css">
+
 	<!-- Required Modernizr file -->
 	<script src="js/modernizr.custom.js"></script>
 </head>
 <body class="deck-container">
 
 <!-- Begin slides. Just make elements with a class of slide. -->
-<section class="slide">
-	<h1>Slide</h1>
+<section class="slide" id="title-slide">
+  <h1>5 Things I Like About CoffeeScript</h1>
 </section>
 
-<section class="slide">
-	<h1>Content</h1>
+<section class="slide" id="hello-js">
+  <h2>The World of JavaScript</h2>
+  <p>This should look familiar...</p>
+  <form>
+  	<textarea id="code" name="code" class="code" mode="javascript" style="display: none;"
+>var http = require('http');
+
+var app = http.createServer(function (req, res) {
+  res.writeHead(200, {
+    'content-type': "text/html"
+  });
+  res.end("<h1>Hello World!</h1>")
+})
+
+app.listen(2001);</textarea>
+	</form>
 </section>
 
-<section class="slide">
-	<h1>Here</h1>
+<section class="slide" id="hello-coffee">
+  <h2>The World of CoffeeScript</h2>
+  <p>... and this shouldn't look too different</p>
+  <form>
+  	<textarea id="code" name="code" class="code" mode="coffeescript" style="display: none;"
+>http = require 'http'
+
+app = http.createServer (req, res) -&gt;
+  res.writeHead 200,
+    'content-type': "text/html"
+  res.end "<h1>Hello World!</h1>"
+
+app.listen 2001</textarea>
+	</form>
 </section>
 
 <!-- End slides. -->
@@ -84,11 +121,25 @@
 <script src="extensions/navigation/deck.navigation.js"></script>
 <script src="extensions/scale/deck.scale.js"></script>
 
+
+<script src="plugins/codemirror/codemirror.js"></script>
+<script src="plugins/codemirror/mode/javascript/javascript.js"></script>
+<script src="plugins/codemirror/mode/coffeescript/coffeescript.js"></script>
+<script src="plugins/codemirror/deck.codemirror.js"></script>
+
 <!-- Initialize the deck. You can put this in an external file if desired. -->
 <script>
 	$(function() {
-		$.deck('.slide');
-	});
+		$.deck('.slide', {
+      codemirror: {
+        lineNumbers: false,
+        theme: "elegant",
+        indentUnit: 2,
+        indentWithTabs: false,
+        runnable: true
+      }
+    });
+  });
 </script>
 </body>
 </html>
