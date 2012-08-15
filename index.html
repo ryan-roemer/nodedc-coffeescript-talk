@@ -58,7 +58,7 @@
   });
 };
 
-console.log(toCamel("space_cased_variable"));</textarea>
+console.log(toCamel("my_cased_variable"));</textarea>
   </div>
 </section>
 
@@ -73,7 +73,7 @@ console.log(toCamel("space_cased_variable"));</textarea>
   str.replace /(\_[a-z])/g, (val) ->
     val.toUpperCase().replace '_', ''
 
-console.log toCamel "space_cased_variable"</textarea>
+console.log toCamel "my_cased_variable"</textarea>
   </div>
 </section>
 
@@ -81,7 +81,9 @@ console.log toCamel "space_cased_variable"</textarea>
   <h2>Overview TODO</h2>
   <div>
     <ul>
-      <li>TODO</li>
+      <li><a href="http://coffeescript.org/">CoffeeScript.org</a></li>
+      <li>Works in Node.js or browser.</li>
+      <li>CoffeeScript <strong>is</strong> JavaScript.</li>
     </ul>
   </div>
 </section>
@@ -89,28 +91,27 @@ console.log toCamel "space_cased_variable"</textarea>
 <section class="slide" id="like-syntax">
   <h2>1. Syntax</h2>
   <p>
-    Borrows familiar constructs from
-    <strong>Ruby</strong> (return variables, optional parenthesis, string
-    interpolation) and
+    Borrows from
+    <strong>Ruby</strong> (string interpolation) and
     <strong>Python</strong> (whitespace, comprehensions).
   </p>
   <div>
     <textarea id="code" name="code" class="code"
-              mode="coffeescript" runnable="true"
+              mode="coffeescript"
               style="display: none;"
 >
-myArray = [
-  "optional"
-  "commas"
-]
-
-myObject =
+myArray   = [ "optional"
+              "commas" ]
+myObject  =
   foo:    "the foo property"
   bar:
     baz1: "nested"
     baz2: "properties"
 
-console.log "myArray: #{myArray.join(', ')}"</textarea>
+myString  = """
+  Yeah!, CoffeeScript has multi-line
+  (heredoc-style) strings!!!
+"""</textarea>
   </div>
 </section>
 
@@ -126,16 +127,12 @@ console.log "myArray: #{myArray.join(', ')}"</textarea>
               mode="coffeescript" runnable="true"
               style="display: none;"
 >
-myFunction = (foo, bar = "hi", args...) ->
-  console.log "foo: #{foo}, bar: #{bar}"
-  console.log "args: #{args.join(', ')}"
-  console.log()
+myFn = (foo, bar="hi", args...) ->
+  console.log "foo: #{foo}, bar: #{bar}, " +
+              "args: #{args.join(', ')}"
 
-# Call with defaults, varargs.
-myFunction(23, null, "another arg", 42)
-
-# Expand array args.
-myFunction([12, 22, 34]...)</textarea>
+myFn(23, null, "boo", 42) # Var-args
+myFn([12, 22, 34]...)     # Expand</textarea>
   </div>
 </section>
 
@@ -154,13 +151,10 @@ myFunction([12, 22, 34]...)</textarea>
 >
 class MyClass
   constructor: (@foo, @bar) ->
-
   @staticMethod: -> console.log "static!"
-
   instanceMethod: => console.log "instance! (#{@foo})"
 
 myObj = new MyClass(42, 23)
-
 MyClass.staticMethod()              # Static
 myObj.instanceMethod()              # Instance
 myObj.instanceMethod.call this, []  # Bound</textarea>
@@ -175,34 +169,49 @@ myObj.instanceMethod.call this, []  # Bound</textarea>
               mode="javascript"
               style="display: none;"
 >
-var myObj = {foo: {bar: {baz: 12}}};
-if (myObj.foo && myObj.foo.bar && myObj.foo.bar.baz)
-  console.log(myObj.foo.bar.baz);</textarea>
+var myObj = {foo: {bar: 12}};
+if (myObj && myObj.foo && myObj.foo.bar)
+  console.log(myObj.foo.bar);</textarea>
   </div>
-  <br />
   <p>... with:</p>
   <div>
     <textarea id="code" name="code" class="code"
               mode="coffeescript" runnable="true"
               style="display: none;"
 >
-myObj = foo: bar: baz: 12
-
-console.log myObj?.foo?.bar?.baz
+myObj = foo: bar: 12
+console.log myObj?.foo?.bar
 console.log myObj?.nope?.noHow?().nowhere</textarea>
   </div>
 </section>
 
 <section class="slide" id="like-iterators">
-  <h2>XXX. Object Iterators / List Comprehensions TODO</h2>
+  <h2>5. Loops, Comprehensions</h2>
+  <p>
+    Works for <em>arrays</em> and <em>objects</em>.
+  </p>
+  <div>
+    <textarea id="code" name="code" class="code"
+              mode="coffeescript" runnable="true"
+              style="display: none;"
+>
+myArr = ["one", "two", "three"]
+comp = ("**#{x}**" for x in myArr)
+console.log comp
+
+myObj = {one: 1, two: 2, three: 3}
+comp = ([k, v+1] for own k, v of myObj)
+console.log comp</textarea>
+  </div>
 </section>
 
 <section class="slide" id="issues">
-  <h2>Issues / Gotchas TODO</h2>
+  <h2>Issues / Gotchas</h2>
   <div>
     <ul>
       <li>Debugging</li>
-      <li>TODO</li>
+      <li>Optional function parentheses</li>
+      <li>Significant whitespace, no semicolons</li>
     </ul>
   </div>
 </section>
